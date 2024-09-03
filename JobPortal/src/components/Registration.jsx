@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { Audio } from 'react-loader-spinner';
+import { setLoading } from '../redux/authSlice';
 
 const Registration = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -47,13 +48,16 @@ const Registration = () => {
   const changeFileHandler = (e) => {
     setForm((prevForm) => ({
       ...prevForm,
-      file: e.target.files[0], // Use e.target.files[0] to get the file object
+      file: e.target.files[0], 
     }));
+    console.log(e.target.files[0])
   };
 
-  const onSubmit = async (form) => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log("entering form");
+    dispatch(setLoading(true));
     try {
-
       const formdata = new FormData();
       formdata.append("firstName", form.firstName);
       formdata.append("lastName", form.lastName);
@@ -63,26 +67,34 @@ const Registration = () => {
       if (form.file) {
         formdata.append("file", form.file);
       }
-
-      await axios.post(API_ENDPOINT, formdata, {
+      console.log("entered", formdata);
+      
+      const response = await axios.post(API_ENDPOINT, formdata, {
         headers: {
           "Content-Type": "multipart/form-data"
         },
         withCredentials: true,
-      }).then(res => {
-        console.log("fetching", res);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        toast(res.data.message);
-        navigate('/');
-      }).catch(error => {
-        console.log(error);
-        toast(error.response.data.message);
       });
+
+      console.log("fetching", response);
+      if (response && response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        toast(response.data.message);
+        navigate('/');
+      } else {
+        throw new Error('Invalid response from server');
+      }
     } catch (error) {
-      console.log(error);
-      toast(error.response.data.message);
+      console.error("Error in registration:", error);
+      if (error.response && error.response.data && error.response.data.message) {
+        toast(error.response.data.message);
+      } else if (error.message) {
+        toast(error.message);
+      } else {
+        toast('An unexpected error occurred. Please try again.');
+      }
     } finally {
-      dispatch(setLoading(false));  // Ensure this line runs regardless of the outcome
+      dispatch(setLoading(false));
     }
   };
 

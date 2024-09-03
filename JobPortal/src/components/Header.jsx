@@ -38,8 +38,11 @@ const Header = () => {
       if (userString) {
         const user = JSON.parse(userString);
         const base64String = user.file.buffer;
+        console.log(user.file.mimetype)
         const imageUrl = `data:${user.file.mimetype};base64,${base64String}`;
-        console.log(userString)
+        // console.log(userString.file.mimetype)
+        // console.log(user.file.mimetype)
+       
         setProfileImageUrl(imageUrl)
         setLoggedIn(true);
       } else {
@@ -54,7 +57,7 @@ const Header = () => {
     return () => {
       window.removeEventListener('storage', checkLoginStatus);
     };
-  }, [cookies.token]);
+  }, );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,6 +108,7 @@ const Header = () => {
     navigate('/');
     console.log("ran")
     setLoggedIn(false)
+    toast("Logged Out Succesfully");
   };
 
   return (

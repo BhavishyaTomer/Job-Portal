@@ -1,12 +1,16 @@
 const registration=require('../models/RegistrationSchema.js')
 var bcrypt = require('bcryptjs');
+const cloudinary=require('../middleware/cloudinary.js')
 var jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const getDataUri = require('../middleware/dataUri.js');
 dotenv.config()
 const registerUser = async (req, res) => {
     let { email, firstName, lastName, password, role } = req.body;
     let file = req.file 
-  
+    //  const fileUri=getDataUri(file);
+    //  const cloudRespone =await  cloudinary.uploader.upload(fileUri.content)
+    //  console.log("cloud",cloudRespone)
     console.log(email, firstName, lastName, password, file, role, req.file);
   
     if (!email || !firstName || !lastName || !password || !role || !file) {

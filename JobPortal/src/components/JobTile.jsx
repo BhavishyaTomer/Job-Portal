@@ -25,7 +25,7 @@ const JobTile = ({ data }) => {
       <section className='p-1 mx-2'>Banglore</section>
       <section className='p-1 mx-2 mb-2 flex justify-between items-center'>
         <div>
-          <button className='bg-red-600 p-2 flex justify-center items-center rounded-lg'>Apply <span className='text-white m-2'><FaArrowRight /></span></button>
+          
         </div>
         <div>
           <FaBookmark className="text-blue-500" size={24} />
