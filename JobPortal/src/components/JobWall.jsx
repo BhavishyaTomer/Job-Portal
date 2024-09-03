@@ -1,0 +1,36 @@
+import React from 'react'
+import Filter from './Filter'
+import JobTile from './JobTile'
+
+const JobWall = () => {
+  const job = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  return (
+    <div className='flex items-center flex-col' >
+      <span className='text-center text-6xl text-textColor font-google mx-auto'>Find Your Dream Job Here</span>
+      <div className='w-full'>
+        <div className='bg-backGround w-full h-auto flex p-10'>
+          <div className='w-1/5 h-screen sticky top-0'>
+            <Filter />
+          </div>
+          <div className='w-4/5 h-screen overflow-y-auto'>
+            {
+              !job ? <span>NO Vacncies for now</span>
+                :
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full bg-backGround ">
+                  {job.map((data, index) => {
+                    return <JobTile key={index} data={data} />
+                  })
+                  }
+                </div>
+            }
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default JobWall

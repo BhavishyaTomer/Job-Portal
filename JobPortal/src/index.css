@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+  :root{
+    --background-color:rgba(31, 34, 50);
+    --text-color:rgba(253, 232, 233);
+    --primary-color:rgba(31, 34, 50);
+    --border-color:rgba(253, 232, 233);
+  }
+
+}
