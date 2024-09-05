@@ -40,8 +40,6 @@ const Header = () => {
         const base64String = user.file.buffer;
         console.log(user.file.mimetype)
         const imageUrl = `data:${user.file.mimetype};base64,${base64String}`;
-        // console.log(userString.file.mimetype)
-        // console.log(user.file.mimetype)
        
         setProfileImageUrl(imageUrl)
         setLoggedIn(true);
@@ -103,7 +101,7 @@ const Header = () => {
   };
 
   const signOut = () => {
-    removeCookie('token', { path: '/' });
+    removeCookie('token', { path: '/', domain: 'localhost' });
     localStorage.removeItem('user');
     navigate('/');
     console.log("ran")

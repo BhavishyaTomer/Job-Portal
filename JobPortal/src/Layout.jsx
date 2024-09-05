@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { useFetchJobs } from './customHooks/useFetchJobs'
+import {CookiesProvider} from "react-cookie";
 
 const Layout = () => {
   return (
@@ -10,9 +11,11 @@ const Layout = () => {
       {
         useFetchJobs()
       }
+      <CookiesProvider>
     <Header/>
     <Outlet/>
     <Footer/>
+    </CookiesProvider>
   </div>
   )
 }

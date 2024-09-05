@@ -17,12 +17,9 @@ const JobDiscription = () => {
         const user = JSON.parse(localStorage.getItem("user"));
         setJobData(data.data.Job)
         
-        if (data.data.Job.application.some(app => app.applicant.toString() === user._id)) {
+        if (user && data.data.Job.application.some(app => app.applicant.toString() === user._id)) {
           setApplyStatus(true)
-    
-
         }
-
       } catch (error) {
         toast(error.response?.data?.message || "Something went wrong");
       }
@@ -41,14 +38,15 @@ const JobDiscription = () => {
   if (!jobData) {
     return <div>Loading...</div>
   }
-  const applyOnJob=async()=>{
-  try {
-    const applicationApply=await axios.get(`${API_ENDPOINT}/ApplyToJob/${id}`,{withCredentials:true})
-    toast(applicationApply.data.message)
-    setApplyStatus(true)
-  } catch (error) {
-    toast(error)  
-  }
+  
+  const applyOnJob = async () => {
+    try {
+      const applicationApply = await axios.get(`${API_ENDPOINT}/ApplyToJob/${id}`, { withCredentials: true })
+      toast(applicationApply.data.message)
+      setApplyStatus(true)
+    } catch (error) {
+      toast(error.response?.data?.message || "Something went wrong")
+    }
   }
 
   return (

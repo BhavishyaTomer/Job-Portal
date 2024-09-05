@@ -16,6 +16,7 @@ import { Provider } from 'react-redux'
 import Browse from './components/Browse';
 import AppliedJobs from './components/AppliedJobs';
 import JobDiscription from './components/JobDiscription';
+import ListedCompany from './Recruiter Components/ListedCompany';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path:"/jobDiscription/:id",
         element:<JobDiscription/>
+      },
+      {
+        path:"/listedCompany",
+        element:<ListedCompany/>
       }
 
     ]

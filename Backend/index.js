@@ -26,9 +26,9 @@ app.use(cookieParser());
 // });
 
 app.use("/api/jobhunt", RegisterRoutes);
-app.use("/api/jobhunt", isAuthenticated,companyRouter);
+app.use("/api/jobhunt",companyRouter);
 app.use("/api/jobhunt", jobRouter);
-app.use("/api/jobhunt", isAuthenticated,applyingRouter);
+app.use("/api/jobhunt",applyingRouter);
 mongoose.connect(process.env.MongoURI)
   .then(() => {
     console.log("Database is online");

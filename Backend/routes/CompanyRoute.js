@@ -3,8 +3,8 @@ const { registerCompany, getCompanyById,getCompany} = require('../Controller/com
 const isAuthenticated = require('../middleware/isAuthenticated');
 const companyRouter = express.Router();
 
-companyRouter.post("/createCompany",registerCompany)
-companyRouter.get("/getCompany/:id",getCompanyById)
-companyRouter.get("/getCompany",getCompany)
+companyRouter.post("/createCompany",isAuthenticated,registerCompany)
+companyRouter.get("/getCompany/:id",isAuthenticated,getCompanyById)
+companyRouter.get("/getCompany",isAuthenticated,getCompany)
 
 module.exports=companyRouter

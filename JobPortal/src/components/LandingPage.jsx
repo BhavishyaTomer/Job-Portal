@@ -19,8 +19,8 @@ const LandingPage = () => {
         <button className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded-md font-google" onClick={() => navigate("/jobPosting")}>
           Find a Job
         </button>
-        <button className="bg-red-800 hover:bg-red-400 text-textColor font-bold py-2 px-4 border-b-4 border-red-700 hover:red-blue-500 rounded-md font-google">
-          Get a Job
+        <button className="bg-red-800 hover:bg-red-400 text-textColor font-bold py-2 px-4 border-b-4 border-red-700 hover:red-blue-500 rounded-md font-google" onClick={()=>navigate("/listedCompany")}>
+          Hire Some One
         </button>
       </section>
       <section className='w-full m-8 mx-auto flex justify-center items-center'>
