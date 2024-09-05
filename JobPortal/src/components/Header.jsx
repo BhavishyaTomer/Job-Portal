@@ -18,7 +18,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const toggleDropdown = () => {
-    navigate("/appliedJobs")
+    
     setIsOpen(!isOpen);
   }
   const closeDropdown = () => setIsOpen(false);

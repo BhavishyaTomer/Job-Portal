@@ -1,9 +1,11 @@
 import React from 'react'
 import Filter from './Filter'
 import JobTile from './JobTile'
+import { useSelector } from 'react-redux'
 
 const JobWall = () => {
   const job = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  const fetchedJobs=useSelector((state)=>state.jobs.allJobs)
   return (
     <div className='flex items-center flex-col' >
       <span className='text-center text-6xl text-textColor font-google mx-auto'>Find Your Dream Job Here</span>
@@ -17,7 +19,7 @@ const JobWall = () => {
               !job ? <span>NO Vacncies for now</span>
                 :
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full bg-backGround ">
-                  {job.map((data, index) => {
+                  {fetchedJobs.map((data, index) => {
                     return <JobTile key={index} data={data} />
                   })
                   }

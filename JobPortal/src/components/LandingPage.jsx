@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import JobCrads from './JobCrads';
 const LandingPage = () => {
   const navigate = useNavigate()
+  
   return (
     <main className='bg-backGround h-auto'>
       <section className='bg-backGround text-textColor font-google text-6xl flex justify-center items-center mx-auto my-10'>

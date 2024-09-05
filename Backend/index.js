@@ -20,14 +20,14 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-  console.log(`Received ${req.method} request to ${req.url}`);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(`Received ${req.method} request to ${req.url}`);
+//   next();
+// });
 
 app.use("/api/jobhunt", RegisterRoutes);
 app.use("/api/jobhunt", isAuthenticated,companyRouter);
-app.use("/api/jobhunt", isAuthenticated,jobRouter);
+app.use("/api/jobhunt", jobRouter);
 app.use("/api/jobhunt", isAuthenticated,applyingRouter);
 mongoose.connect(process.env.MongoURI)
   .then(() => {

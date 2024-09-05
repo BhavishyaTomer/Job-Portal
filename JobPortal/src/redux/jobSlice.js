@@ -5,10 +5,10 @@ const jobSlice = createSlice({
        allJobs:[]
     },
     reducers: {
-        applyJobs: (state, action) => {
+        getJobs: (state, action) => {
             state.allJobs = action.payload;
         }
     }
 });
-export const { applyJobs } = jobSlice.actions;
+export const { getJobs } = jobSlice.actions;
 export default jobSlice.reducer;

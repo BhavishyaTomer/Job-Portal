@@ -1,15 +1,17 @@
 import React from 'react';
 import JobTile from './JobTile';
+import { useSelector } from 'react-redux';
 
 const JobCrads = () => {
-    const cards = [1, 2, 3, 4, 5, 6];
+    const fetchedJobs=useSelector((state)=>state.jobs.allJobs)
+    const limitedJobs = fetchedJobs.slice(0, 6);
     
     return (
         <div className="bg-backGround flex justify-center items-center p-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full bg-backGround">
-                {cards.map((data, index) => {
+                {limitedJobs.map((data, index) => {
                     return (
-                        <JobTile data={data} key={index}/>
+                        <JobTile data={data} key={data._id}/>
                     );
                 })}
             </div>

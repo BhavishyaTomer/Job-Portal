@@ -93,7 +93,7 @@ const getApplicants = async (req, res) => {
                 path: 'applicant'
             }
         });
-        // console.log(Job)
+        
         if (!job) {
             return res.status(404).json({
                 message: 'Job not found.',

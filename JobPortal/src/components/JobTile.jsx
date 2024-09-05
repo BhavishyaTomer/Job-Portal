@@ -5,24 +5,24 @@ const JobTile = ({ data }) => {
   const skills = ["AWS", "REACT", "Angular"]
   const navigate=useNavigate()
   return (
-    <div className=' border-2 border-white flex flex-col shadow-md shadow-white mb-auto' onClick={()=>{
-      navigate(`/jobDiscription/${12345}`)
+    <div className=' border-2 border-white flex flex-col shadow-md shadow-white ' onClick={()=>{
+      navigate(`/jobDiscription/${data._id}`)
     }}>
-      <section className='p-1 mx-2 text-6xl'>Title</section>
-      <section className='p-1 mx-2 text-4xl'>Description</section>
-      <section className='p-1 mx-2'>12 lpa</section>
-      <section className='p-1 mx-2'>8 postions</section>
+      <section className='p-1 mx-2 text-4xl'>{data.title}</section>
+      <section className='p-1 mx-2 text-2xl'>{data.description}</section>
+      <section className='p-1 mx-2'>{data.salary}</section>
+      <section className='p-1 mx-2'>{data.position}</section>
       <section className='flex'>
         {
-          skills.map((info, index) => {
-            return (<span className='p-1  bg-textColor text-backGround  text-2xl mx-2 rounded-full'>
+          data.skills.map((info, index) => {
+            return (<span className='p-1  bg-textColor text-backGround  text-2xl mx-2 rounded-full' key={info._id}>
               {info}
             </span>
             )
           })
         }
       </section>
-      <section className='p-1 mx-2'>Banglore</section>
+      <section className='p-1 mx-2'>{data.location}</section>
       <section className='p-1 mx-2 mb-2 flex justify-between items-center'>
         <div>
           
