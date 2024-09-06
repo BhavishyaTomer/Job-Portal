@@ -2,7 +2,8 @@
 const CompanySchema = require('../models/CompanySchema.js');
 
 const registerCompany=async(req,res)=>{
- const{name,userId,Location,website}=req.body;
+ const{name,Location,website}=req.body;
+ const userId=req.id
  console.log("register")
  try {
     const exist=await CompanySchema.findOne({name})

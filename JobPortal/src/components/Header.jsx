@@ -101,7 +101,7 @@ const Header = () => {
   };
 
   const signOut = () => {
-    removeCookie('token', { path: '/', domain: 'localhost' });
+    removeCookie('token');
     localStorage.removeItem('user');
     navigate('/');
     console.log("ran")
