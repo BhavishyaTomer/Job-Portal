@@ -1,10 +1,31 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { APllIED_JOB } from '../config/endpoint';
 const AppliedJobs = () => {
+
+const [appliedJob,setAppliedJob]=useState([])
+  useEffect(()=>{
+  const getAppliedJobs=async()=>{
+    try {
+      const jobList=await axios.get(APllIED_JOB,{withCredentials:true})
+      if(jobList)
+      {
+        setAppliedJob(jobList.data.applicationApplied)
+        console.log(jobList.data.applicationApplied[0])
+      }
+    } catch (error) {
+      
+    }
+  }
+  getAppliedJobs()
+  },[])
+  const dateConverter = (date) => {
+    return new Date(date).toLocaleDateString(); 
+  };
   return (
     <div className='min-h-screen max-h-auto flex flex-col items-center'>
       <section className='text-5xl mb-8'>
-        One must learn to tolerate failures without being disturbed.
+        Applied Companies
       </section>
       <table className="table-fixed m-36 w-3/4 text-2xl border border-white">
         <thead>
@@ -17,13 +38,13 @@ const AppliedJobs = () => {
         </thead>
         <tbody>
             {
-                [1,2,3,4,5].map((info)=>{
+                appliedJob.map((info)=>{
                     return(
                         <tr className='text-center border-b border-white'>
-                            <td className="px-4 py-2">19-06-2000</td>
-            <td className="px-4 py-2">Software Solution</td>
-            <td className="px-4 py-2">Microsoft</td>
-            <td className="px-4 py-2">Blacklisted</td>
+                            <td className="px-4 py-2">{dateConverter(info.job.updatedAt)}</td>
+            <td className="px-4 py-2">{info.job.title}</td>
+            <td className="px-4 py-2">{info.job.company.name}</td>
+            <td className="px-4 py-2">{info.status}</td>
                         </tr>
                     )
                 })

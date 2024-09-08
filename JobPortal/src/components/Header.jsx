@@ -21,7 +21,10 @@ const Header = () => {
     
     setIsOpen(!isOpen);
   }
-  const closeDropdown = () => setIsOpen(false);
+  const closeDropdown = () =>{
+setIsOpen(false);
+navigate("/appliedJobs")
+  } 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.auth.value)

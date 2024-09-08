@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { COMPANY_CREATE, COMPANY_ENDPOINT } from '../config/endpoint';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ListedCompany = () => {
   const [companyDetails, setCompanyDetails] = useState([]); 
   const [isOpen, setIsOpen] = useState(false);
+  const navigate=useNavigate()
   
   const { register, handleSubmit, formState: { errors } } = useForm();
 

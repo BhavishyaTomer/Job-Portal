@@ -6,6 +6,7 @@ import { COMPANY_ENDPOINT, JOB_CREATE } from '../config/endpoint';
 import styled from 'styled-components';
 
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const StyledSelect = styled(Select)`
 background: bg-backGround;
 border: 1px solid #fff !important;
@@ -83,6 +84,7 @@ const CreateJob = () => {
             [e.target.name]: e.target.value
         }));
     };
+    const navigate=useNavigate()
 
 
     const [skills, setSkills] = useState(null);
@@ -125,7 +127,7 @@ const CreateJob = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Basic validation
+       
         if (!formValue.title || !formValue.location || !formValue.salary || !formValue.position || !selectedSkills.length || !selectedCompany || !formValue.description) {
             toast.error("All fields are required.");
             return;
@@ -135,7 +137,7 @@ const CreateJob = () => {
             const createJob = await axios.post(JOB_CREATE, formValue, { withCredentials: true });
             if (createJob) {
                 toast.success("Job Successfully Created");
-                // Reset form after successful submission
+                
                 setFormValue({
                     title: "",
                     location: "",
@@ -258,10 +260,12 @@ const CreateJob = () => {
                         value={formValue.description}
                         name='description' />
                 </section>
-                <div className='mb-10'>
+                <div className='mb-10 flex justify-between'>
                     <button className='bg-red-600 px-2 py-1 rounded-md text-3xl mt-10 ' type='submit'>Post A Job</button>
+                    <button className='bg-green-500 px-2 py-1 rounded-md text-3xl mt-10' onClick={() => navigate("/postedJob")}>Job History</button>
+
                 </div>
-                <span className='text-red-600 my-10 text-2xl'> * Please register a company Before Posting a Job!!</span>
+                <span className='text-red-600 my-10 text-2xl'> * Please register <span className=' pointer-events-auto cursor-pointer hover:text-red-400 underline' onClick={()=>navigate("/listedCompany")}>a company here</span> Before Posting a Job!!</span>
 
 
             </form>

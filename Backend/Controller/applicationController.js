@@ -83,6 +83,36 @@ const getAppliedJobs = async (req, res) => {
     }
 }
 
+const getPostedJobs = async (req, res) => {
+    try {
+        const userId = req.id;
+        const jobFetch = await job.find({ created_by: userId })
+            .populate({
+                path: 'company',
+                options: { sort: { createdAt: -1 } }
+            })
+            .lean();  // Convert to plain JavaScript object
+
+        if (!jobFetch || jobFetch.length === 0) {
+            return res.status(404).json({
+                message: "No jobs found",
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            jobs: jobFetch
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "An error occurred while fetching jobs",
+            success: false
+        });
+    }
+};
 const getApplicants = async (req, res) => {
     try {
         const jobId = req.params.id;
@@ -139,4 +169,4 @@ const updateStatus = async (req, res) => {
     }
 }
 
-module.exports={updateStatus,getApplicants,getAppliedJobs,applyToApplication}
+module.exports={updateStatus,getApplicants,getAppliedJobs,applyToApplication,getPostedJobs}

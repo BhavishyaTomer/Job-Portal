@@ -9,21 +9,21 @@ const JobDiscription = () => {
   const [applyStatus, setApplyStatus] = useState(false)
   const [jobData, setJobData] = useState(null)
   const { id } = useParams()
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const data = await axios.get(`${Job_ENDPOINT}/${id}`, { withCredentials: true })
-        const user = JSON.parse(localStorage.getItem("user"));
-        setJobData(data.data.Job)
-        
-        if (user && data.data.Job.application.some(app => app.applicant.toString() === user._id)) {
-          setApplyStatus(true)
-        }
-      } catch (error) {
-        toast(error.response?.data?.message || "Something went wrong");
+  const fetchJobs = async () => {
+    try {
+      const data = await axios.get(`${Job_ENDPOINT}/${id}`, { withCredentials: true })
+      const user = JSON.parse(localStorage.getItem("user"));
+      setJobData(data.data.Job)
+      
+      if (user && data.data.Job.application.some(app => app.applicant.toString() === user._id)) {
+        setApplyStatus(true)
       }
+    } catch (error) {
+      toast(error.response?.data?.message || "Something went wrong");
     }
+  }
+  useEffect(() => {
+ 
     fetchJobs()
   }, [id])
 
@@ -44,6 +44,7 @@ const JobDiscription = () => {
       const applicationApply = await axios.get(`${API_ENDPOINT}/ApplyToJob/${id}`, { withCredentials: true })
       toast(applicationApply.data.message)
       setApplyStatus(true)
+      fetchJobs()
     } catch (error) {
       toast(error.response?.data?.message || "Something went wrong")
     }
