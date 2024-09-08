@@ -17,6 +17,8 @@ import Browse from './components/Browse';
 import AppliedJobs from './components/AppliedJobs';
 import JobDiscription from './components/JobDiscription';
 import ListedCompany from './Recruiter Components/ListedCompany';
+import CreateJob from './Recruiter Components/CreateJob';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -53,18 +55,23 @@ const router = createBrowserRouter([
         path:"/listedCompany",
         element:<ListedCompany/>
       }
+      ,
+      {
+        path:"/CreateJob",
+        element:<CreateJob/>
+      }
 
     ]
   },
 ]);
 
 root.render(
-  <React.StrictMode>
+  <>
     <CookiesProvider>
     <Provider store={store}>
 
      <RouterProvider router={router} />
      </Provider>
      </CookiesProvider>
-  </React.StrictMode>
+  </>
 );

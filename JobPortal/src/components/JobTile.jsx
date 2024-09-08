@@ -2,7 +2,7 @@ import React from 'react'
 import { FaArrowRight, FaBookmark } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 const JobTile = ({ data }) => {
-  const skills = ["AWS", "REACT", "Angular"]
+
   const navigate=useNavigate()
   return (
     <div className=' border-2 border-white flex flex-col shadow-md shadow-white ' onClick={()=>{
@@ -15,7 +15,7 @@ const JobTile = ({ data }) => {
       <section className='flex'>
         {
           data.skills.map((info, index) => {
-            return (<span className='p-1  bg-textColor text-backGround  text-2xl mx-2 rounded-full' key={info._id}>
+            return (<span className='p-1  bg-textColor text-backGround  text-2xl mx-2 rounded-full' key={index}>
               {info}
             </span>
             )

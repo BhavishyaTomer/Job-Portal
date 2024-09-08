@@ -79,6 +79,7 @@ const JobDiscription = () => {
         <section className='p-1 mx-2 text-2xl'>Vacancy: {jobData.position}</section>
         <section className='p-1 mx-2 text-2xl'>Location: {jobData.location}</section>
         <section className='p-1 mx-2 text-2xl'>Date Posted: {calculateDaysSinceUpdate(jobData.updatedAt)} days ago</section>
+        <section className='p-1 mx-2 text-2xl'>Applicant: {jobData.application.length}</section>
         <section className='p-1 mx-2 mb-2 flex justify-between items-center'>
           <div></div>
           <div>

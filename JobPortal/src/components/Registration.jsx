@@ -55,7 +55,7 @@ const Registration = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("entering form");
+    
     dispatch(setLoading(true));
     try {
       const formdata = new FormData();

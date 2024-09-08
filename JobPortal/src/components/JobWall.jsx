@@ -4,7 +4,7 @@ import JobTile from './JobTile'
 import { useSelector } from 'react-redux'
 
 const JobWall = () => {
-  const job = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
   const fetchedJobs=useSelector((state)=>state.jobs.allJobs)
   return (
     <div className='flex items-center flex-col' >
@@ -16,7 +16,7 @@ const JobWall = () => {
           </div>
           <div className='w-4/5 h-screen overflow-y-auto'>
             {
-              !job ? <span>NO Vacncies for now</span>
+              !fetchedJobs ? <span>NO Vacncies for now</span>
                 :
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full bg-backGround ">
                   {fetchedJobs.map((data, index) => {

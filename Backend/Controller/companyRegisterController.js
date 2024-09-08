@@ -8,7 +8,7 @@ const registerCompany=async(req,res)=>{
  try {
     const exist=await CompanySchema.findOne({name})
     console.log("entered try block")
-    if(exist)
+    if(exist) 
     {
        return res.status(400).json({
         message:"Company already present",
