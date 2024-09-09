@@ -14,7 +14,7 @@ const LandingPage = () => {
   return (
     <main className='bg-backGround h-auto'>
       <section className='bg-backGround text-textColor font-google text-1xl xl:text-6xl lg:text-4xl md: text-3xl flex justify-center items-center mx-auto my-10'>
-        Rishtedaaron ke taano se tanno aagae ho?
+        Rishtedaaron ke taano se tang aagae ho?
       </section>
     
       <section className='bg-backGround text-textColor font-google text-6xl flex flex-col lg:flex-row justify-center items-center mx-auto my-10 gap-10  '>
