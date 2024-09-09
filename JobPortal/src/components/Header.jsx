@@ -16,6 +16,7 @@ const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [visibleApply,setVisibileApply]=useState(true)
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const toggleDropdown = () => {
     
@@ -71,8 +72,23 @@ navigate("/appliedJobs")
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
+    
   }, []);
 
+  useEffect(()=>{
+    const user = localStorage.getItem("user");
+    if(user){
+    const ParsedUser=JSON.parse(user)
+    const role =ParsedUser.role
+    console.log(role)
+    if (role!=="Job seeker") {
+        setVisibileApply(false)
+    }
+    else{
+      setVisibileApply(true)
+  }
+
+  }},[])
 
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -117,7 +133,7 @@ navigate("/appliedJobs")
       className={`sticky top-0 z-[20] mx-auto flex justify-between items-center p-8 transition-colors duration-300 ${isScrolled ? 'bg-backGround/30 backdrop-blur-lg' : 'bg-backGround'
         }`}
     >
-      <img src={img} alt="Logo" className='w-auto h-20' onClick={() => navigate("/")} />
+      <img src={img} alt="Logo" className='w-auto h-20 pointer-events-auto cursor-pointer' onClick={() => navigate("/")} />
       <ToastContainer />
 
       {!loggedIn ? (
@@ -156,6 +172,7 @@ navigate("/appliedJobs")
               tabIndex="-1"
             >
               <div className="py-1" role="none">
+                {visibleApply&&
                 <span
                   className="block px-4 py-2 text-md text-textColor bg-backGround border-b border-border cursor-pointer "
                   role="menuitem"
@@ -165,7 +182,7 @@ navigate("/appliedJobs")
                 >
                   Applied Jobs
                 </span>
-
+}
                 <button
                   type="submit"
                   className="block w-full px-4 py-2 text-left text-md text-textColor bg-backGround border-b border-border"

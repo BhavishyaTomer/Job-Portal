@@ -1,10 +1,10 @@
 import axios, { Axios } from 'axios'
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CHANGE_STATUS, UPDATE_STATUS } from '../config/endpoint'
 import Select from "react-dropdown-select"
 import styled from 'styled-components';
-import { ToastContainer,toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 const StyledSelect = styled(Select)`
 background: bg-backGround;
 border: 1px solid #fff !important;
@@ -89,9 +89,20 @@ const ChangeStatus = () => {
         }
     }
     useEffect(() => {
-     
+
         fetchApplicant()
     }, [id])
+    const navigate = useNavigate()
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            const ParsedUser = JSON.parse(user)
+            const role = ParsedUser?.role
+            if (role === "Job seeker") {
+                navigate("/redirect");
+            }
+        }
+    }, []);
 
     const handleCompanyChange = async (id, selectedValue) => {
         console.log(id, selectedValue);
@@ -107,7 +118,7 @@ const ChangeStatus = () => {
     };
     return (
         <div className='min-h-screen flex  justify-center'>
-            <ToastContainer/>
+            <ToastContainer />
             <div className='w-3/4'>
                 <table className="table-auto w-full text-2xl border border-white">
                     <thead>
@@ -124,14 +135,14 @@ const ChangeStatus = () => {
                                 <td className="px-4 py-2">{info.applicant.firstName} {info.applicant.lastName}</td>
                                 <td className="px-4 py-2">{info.applicant.email}</td>
                                 <td className="px-4 py-2">{info.status}</td>
-                                <td className="px-4 py-2">  
+                                <td className="px-4 py-2">
                                     <StyledSelect
-                                    onChange={(selected) => handleCompanyChange(info._id,
-                                         selected[0].value)}
-                                    className='bg-backGround text-textColor'
-                                    values={info.status ? [{ value: info.status, label: skillOptions.find(opt => opt.value === info.status)?.label }] : []}
-                                    options={skillOptions}
-                                /></td>
+                                        onChange={(selected) => handleCompanyChange(info._id,
+                                            selected[0].value)}
+                                        className='bg-backGround text-textColor'
+                                        values={info.status ? [{ value: info.status, label: skillOptions.find(opt => opt.value === info.status)?.label }] : []}
+                                        options={skillOptions}
+                                    /></td>
                             </tr>
                         ))}
                     </tbody>

@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 const JobDiscription = () => {
   const [applyStatus, setApplyStatus] = useState(false)
   const [jobData, setJobData] = useState(null)
+  const [visibileApply,setVisibileApply]=useState(true)
   const { id } = useParams()
   const fetchJobs = async () => {
     try {
@@ -26,6 +27,24 @@ const JobDiscription = () => {
  
     fetchJobs()
   }, [id])
+  useEffect(()=>{
+    const user = localStorage.getItem("user");
+    if(user){
+    const ParsedUser=JSON.parse(user)
+    const role =ParsedUser.role
+    if (role!=="Job seeker"||user==null) {
+        setVisibileApply(false)
+    }
+    if(role==="Job seeker"){
+      setVisibileApply(true)
+    }
+  }
+  else{
+    setVisibileApply(false)
+  }
+  
+
+  },[])
 
   const calculateDaysSinceUpdate = (dateString) => {
     const updatedDate = new Date(dateString);
@@ -58,9 +77,14 @@ const JobDiscription = () => {
           <div className='flex justify-between items-center'>
             <section className='p-1 mx-2 text-6xl'>{jobData.title}</section>
             <div>
-              {applyStatus ?
+              {
+              visibileApply?
+              
+              applyStatus ?
                 <button className='bg-gray-500 p-2 flex justify-center items-center rounded-lg mx-2 text-2xl px-6'>Applied</button> :
                 <button className='bg-red-600 p-2 flex justify-center items-center rounded-lg mx-2 text-2xl px-6' onClick={applyOnJob}>Apply</button>
+                :
+                ""
               }
             </div>
           </div>

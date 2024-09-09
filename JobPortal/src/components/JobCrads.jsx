@@ -3,8 +3,9 @@ import JobTile from './JobTile';
 import { useSelector } from 'react-redux';
 
 const JobCrads = () => {
-    const fetchedJobs=useSelector((state)=>state.jobs.allJobs)
+    const fetchedJobs=useSelector((state)=>state.jobs.filteredJobs)
     const limitedJobs = fetchedJobs.slice(0, 6);
+    
     
     return (
         <div className="bg-backGround flex justify-center items-center p-12">

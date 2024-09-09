@@ -84,7 +84,23 @@ const CreateJob = () => {
             [e.target.name]: e.target.value
         }));
     };
-    const navigate=useNavigate()
+    const navigate = useNavigate()
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+
+        if (user) {
+            const ParsedUser = JSON.parse(user);
+            const role = ParsedUser.role;
+            if (role === "Job seeker") {
+                navigate("/redirect");
+            }
+        } else {
+            // If user is null
+            console.log("running");
+            navigate("/redirect");
+        }
+    }, [navigate]);
+
 
 
     const [skills, setSkills] = useState(null);
@@ -127,7 +143,7 @@ const CreateJob = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-       
+
         if (!formValue.title || !formValue.location || !formValue.salary || !formValue.position || !selectedSkills.length || !selectedCompany || !formValue.description) {
             toast.error("All fields are required.");
             return;
@@ -137,7 +153,7 @@ const CreateJob = () => {
             const createJob = await axios.post(JOB_CREATE, formValue, { withCredentials: true });
             if (createJob) {
                 toast.success("Job Successfully Created");
-                
+
                 setFormValue({
                     title: "",
                     location: "",
@@ -184,12 +200,12 @@ const CreateJob = () => {
             <ToastContainer />
             <section className='text-6xl m-10'>Create Job Here</section>
             <form className='w-1/2 h-3/4 flex-col' onSubmit={handleSubmit}>
-                <div className='flex justify-between items-center my-6'>
+                <div className='flex flex-col lg:flex-row justify-between items-center my-6 '>
                     <section className='flex flex-col'>
                         <span className='text-textColor text-3xl'>Title</span>
                         <input
                             type='text'
-                            className='bg-backGround text-textColor font-semibold w bottom-2 border border-white rounded-lg px-1 text-2xl'
+                            className='bg-backGround text-textColor font-semibold w-full bottom-2 border border-white rounded-lg px-1 text-2xl'
                             onChange={formHandler}
                             value={formValue.title}
                             name='title'
@@ -199,14 +215,15 @@ const CreateJob = () => {
                         <span className='text-textColor text-3xl'>Location</span>
                         <input
                             type='text'
-                            className='bg-backGround text-textColor font-semibold w bottom-2 border border-white rounded-lg px-1 text-2xl'
+                            className='bg-backGround text-textColor font-semibold w-full bottom-2 border border-white rounded-lg px-1 text-2xl'
                             onChange={formHandler}
                             value={formValue.location}
                             name='location'
                         />
                     </section>
                 </div>
-                <div className='flex justify-between items-center my-6'>
+
+                <div className='flex flex-col lg:flex-row justify-between items-center my-6 '>
                     <section className='flex flex-col'>
                         <span className='text-textColor text-3xl'>Salary</span>
                         <input
@@ -228,8 +245,8 @@ const CreateJob = () => {
                         />
                     </section>
                 </div>
-                <div className='flex justify-between items-center my-6'>
-                    <section className='flex flex-col w-1/3'>
+                <div className='flex flex-col lg:flex-row justify-between items-center my-6 '>
+                    <section className='flex flex-col w-full lg:w-1/3'>
                         <span className='text-textColor text-3xl'>Skill Select</span>
                         <StyledSelect
                             values={selectedSkills}
@@ -238,7 +255,7 @@ const CreateJob = () => {
                             multi={true}
                         />
                     </section>
-                    <section className='flex flex-col w-1/3'>
+                    <section className='flex flex-col w-full lg:w-1/3'>
                         <span className='text-textColor text-3xl'>Company Select</span>
                         <StyledSelect
 
@@ -260,12 +277,12 @@ const CreateJob = () => {
                         value={formValue.description}
                         name='description' />
                 </section>
-                <div className='mb-10 flex justify-between'>
+                <div className='mb-10 flex flex-col justify-between lg:flex-row'>
                     <button className='bg-red-600 px-2 py-1 rounded-md text-3xl mt-10 ' type='submit'>Post A Job</button>
                     <button className='bg-green-500 px-2 py-1 rounded-md text-3xl mt-10' onClick={() => navigate("/postedJob")}>Job History</button>
 
                 </div>
-                <span className='text-red-600 my-10 text-2xl'> * Please register <span className=' pointer-events-auto cursor-pointer hover:text-red-400 underline' onClick={()=>navigate("/listedCompany")}>a company here</span> Before Posting a Job!!</span>
+                <span className='text-red-600 my-10 text-2xl'> * Please register <span className=' pointer-events-auto cursor-pointer hover:text-red-400 underline' onClick={() => navigate("/listedCompany")}>a company here</span> Before Posting a Job!!</span>
 
 
             </form>

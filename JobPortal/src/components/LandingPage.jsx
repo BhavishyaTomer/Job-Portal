@@ -3,8 +3,12 @@ import { Carousel } from "@material-tailwind/react";
 import backGroundImg from '../config/banner.jpeg'
 import { useNavigate } from 'react-router-dom';
 import JobCrads from './JobCrads';
+import { useDispatch } from 'react-redux';
+import { filterJobs } from '../redux/jobSlice';
+
 const LandingPage = () => {
   const navigate = useNavigate()
+  const dispatch=useDispatch()
   
   return (
     <main className='bg-backGround h-auto'>
@@ -29,9 +33,9 @@ const LandingPage = () => {
       <section className='bg-backGround text-textColor font-google text-3xl flex flex-col justify-center items-center mx-auto my-10 gap-2 p-1'>
         Popular Categories For Recruiters
         <section className='bg-backGround text-textColor font-google text-5xl flex flex-col md:flex-row lg:flex-row xl:flex-row justify-center items-center mx-auto my-10 gap-10'>
-          <button className='bg-rose-100 border-blue-950 rounded-full text-backGround p-2'>Frontend Developer</button>
-          <button className='bg-rose-100 border-blue-950 rounded-full text-backGround p-2'>Backend Developer</button>
-          <button className='bg-rose-100 border-blue-950 rounded-full text-backGround p-2'>Full Stack Developer</button>
+          <button className='bg-rose-100 border-blue-950 rounded-full text-backGround p-2'onClick={() => dispatch(filterJobs("frontend"))}>Frontend Developer</button>
+          <button className='bg-rose-100 border-blue-950 rounded-full text-backGround p-2' onClick={() => dispatch(filterJobs("backend"))} >Backend Developer</button>
+          <button className='bg-rose-100 border-blue-950 rounded-full text-backGround p-2' onClick={() => dispatch(filterJobs("fullStack"))} >Full Stack Developer</button>
         </section>
       </section>
      
@@ -39,7 +43,7 @@ const LandingPage = () => {
         Latest and Top Job <span className='text-red-500'>Openings</span>
       </section>
       <JobCrads />
-
+        
     </main>
   )
 }

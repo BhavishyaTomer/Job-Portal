@@ -6,10 +6,12 @@ const ProtectedRoute = ({ children }) => {
 
     useEffect(() => {
         const user = localStorage.getItem("user");
-        if (!user) {
-            navigate("/");
+        const ParsedUser=JSON.parse(user)
+        const role =ParsedUser.role
+        if (role==="Job seeker") {
+            navigate("/redirect");
         }
-    }, [navigate]);
+    }, []);
 
     return children;
 };

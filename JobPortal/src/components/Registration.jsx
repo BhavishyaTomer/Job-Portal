@@ -100,11 +100,11 @@ const Registration = () => {
 
 
   return (
-    <div className='bg-backGround w-full h-screen flex flex-col items-center'>
+    <div className='bg-backGround w-full min-h-screen  max-h-full flex flex-col items-center'>
       <section className='text-textColor flex justify-center items-center font-google text-6xl'>
         Yahan Apni Registry karen!!
       </section>
-      <form className='grid grid-cols-2 w-2/3 m-10' onSubmit={onSubmit}>
+      <form className='grid grid-cols-1 w-2/3 m-10  xl:grid-cols-2 ' onSubmit={onSubmit}>
         <section className='flex flex-col ml-10 my-7'>
           <span className='text-textColor font-google text-3xl'>First Name</span>
           <input

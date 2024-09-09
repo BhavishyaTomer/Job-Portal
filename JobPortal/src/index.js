@@ -21,6 +21,7 @@ import CreateJob from './Recruiter Components/CreateJob';
 import 'react-toastify/dist/ReactToastify.css';
 import PostedJobs from './Recruiter Components/PostedJobs';
 import ChangeStatus from './Recruiter Components/ChangeStatus';
+import RecruiterOnly from './config/RecruiterOnly.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
@@ -60,7 +61,9 @@ const router = createBrowserRouter([
       ,
       {
         path:"/CreateJob",
-        element:<CreateJob/>
+        element:
+        <CreateJob/>
+        
       },
       {
         path:"/postedJob",
@@ -69,7 +72,12 @@ const router = createBrowserRouter([
       {
         path:"/changeStatus/:id",
         element:<ChangeStatus/>
+      },
+      {
+        path:"/redirect",
+        element:<RecruiterOnly/>
       }
+      
 
     ]
   },
