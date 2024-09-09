@@ -2,12 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-  :root{
-    --background-color:rgba(31, 34, 50);
-    --text-color:rgba(253, 232, 233);
-    --primary-color:rgba(31, 34, 50);
-    --border-color:rgba(253, 232, 233);
+@layer base {
+  :root {
+    --background-color: rgba(31, 34, 50);
+    --text-color: rgba(253, 232, 233);
+    --primary-color: rgba(31, 34, 50);
+    --border-color: rgba(253, 232, 233);
   }
 
+  [data-theme='light'] {
+    --background-color: rgb(212, 196, 196);
+    --text-color: rgba(31, 34, 50);
+    --primary-color: rgba(31, 34, 50);
+    --border-color: rgba(31, 34, 50);
+  }
+
+  [data-theme='dark'] {
+    --background-color: rgba(31, 34, 50);
+    --text-color: rgba(253, 232, 233);
+    --primary-color: rgba(31, 34, 50);
+    --border-color: rgba(253, 232, 233);
+  }
 }

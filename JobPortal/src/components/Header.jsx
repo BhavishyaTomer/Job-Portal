@@ -10,22 +10,23 @@ import { API_ENDPOINT } from '../config/endpoint';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../redux/authSlice';
 import { Audio } from 'react-loader-spinner'
+import ThemeSwitcher from '../service/ThemeSwitcher';
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [visibleApply,setVisibileApply]=useState(true)
+  const [visibleApply, setVisibileApply] = useState(true)
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const toggleDropdown = () => {
-    
+
     setIsOpen(!isOpen);
   }
-  const closeDropdown = () =>{
-setIsOpen(false);
-navigate("/appliedJobs")
-  } 
+  const closeDropdown = () => {
+    setIsOpen(false);
+    navigate("/appliedJobs")
+  }
   const toggleModal = () => setIsModalOpen(!isModalOpen);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.auth.value)
@@ -44,7 +45,7 @@ navigate("/appliedJobs")
         const base64String = user.file.buffer;
         console.log(user.file.mimetype)
         const imageUrl = `data:${user.file.mimetype};base64,${base64String}`;
-       
+
         setProfileImageUrl(imageUrl)
         setLoggedIn(true);
       } else {
@@ -59,7 +60,7 @@ navigate("/appliedJobs")
     return () => {
       window.removeEventListener('storage', checkLoginStatus);
     };
-  }, );
+  },);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,23 +73,10 @@ navigate("/appliedJobs")
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-    
+
   }, []);
 
-  useEffect(()=>{
-    const user = localStorage.getItem("user");
-    if(user){
-    const ParsedUser=JSON.parse(user)
-    const role =ParsedUser.role
-    console.log(role)
-    if (role!=="Job seeker") {
-        setVisibileApply(false)
-    }
-    else{
-      setVisibileApply(true)
-  }
 
-  }},[])
 
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -118,6 +106,24 @@ navigate("/appliedJobs")
       });
     toggleModal();
   };
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const ParsedUser = JSON.parse(user)
+      const role = ParsedUser.role
+      console.log(role)
+      if (role !== "Job seeker") {
+        setVisibileApply(false)
+      }
+      else {
+        setVisibileApply(true)
+      }
+
+    }
+    else {
+      setVisibileApply(false)
+    }
+  }, [onSubmit])
 
   const signOut = () => {
     removeCookie('token');
@@ -136,32 +142,40 @@ navigate("/appliedJobs")
       <img src={img} alt="Logo" className='w-auto h-20 pointer-events-auto cursor-pointer' onClick={() => navigate("/")} />
       <ToastContainer />
 
-      {!loggedIn ? (
-        <button
-          onClick={toggleModal}
-          className="bg-transparent hover:bg-red-500 text-textColor font-semibold hover:text-white py-2 px-4 border border-border hover:border-transparent rounded-lg"
-        >
-          Login
-        </button>
+       <div>
+       {
+       !loggedIn ? (
+        <>
+          {<ThemeSwitcher />}
+          <button
+            onClick={toggleModal}
+            className="bg-transparent hover:bg-red-500 text-textColor font-semibold hover:text-white py-2 px-4 border border-border hover:border-transparent rounded-lg mx-5"
+          >
+            Login
+          </button></>
       ) : (
-        <div className="relative inline-block text-left">
-          <div>
-            <button
-              type="button"
-              className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              id="menu-button"
-              aria-expanded={isOpen}
-              aria-haspopup="true"
-              onClick={toggleDropdown}
-            >
-              {profileImageUrl ? (
-                <img src={profileImageUrl} alt="Profile" className="w-8 h-8 rounded-full" />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-gray-300">Pic here</div>
-              )}
+         <>
+         {<ThemeSwitcher/>}
+        <div className="relative inline-block text-left mx-5">
+          
+            <div>
+              <button
+                type="button"
+                className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                id="menu-button"
+                aria-expanded={isOpen}
+                aria-haspopup="true"
+                onClick={toggleDropdown}
+              >
+                {profileImageUrl ? (
+                  <img src={profileImageUrl} alt="Profile" className="w-8 h-8 rounded-full" />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-gray-300">Pic here</div>
+                )}
 
-            </button>
-          </div>
+              </button>
+            </div>
+          
 
           {isOpen && (
             <div
@@ -172,17 +186,17 @@ navigate("/appliedJobs")
               tabIndex="-1"
             >
               <div className="py-1" role="none">
-                {visibleApply&&
-                <span
-                  className="block px-4 py-2 text-md text-textColor bg-backGround border-b border-border cursor-pointer "
-                  role="menuitem"
-                  tabIndex="-1"
-                  id="menu-item-0"
-                  onClick={closeDropdown}
-                >
-                  Applied Jobs
-                </span>
-}
+                {visibleApply &&
+                  <span
+                    className="block px-4 py-2 text-md text-textColor bg-backGround border-b border-border cursor-pointer "
+                    role="menuitem"
+                    tabIndex="-1"
+                    id="menu-item-0"
+                    onClick={closeDropdown}
+                  >
+                    Applied Jobs
+                  </span>
+                }
                 <button
                   type="submit"
                   className="block w-full px-4 py-2 text-left text-md text-textColor bg-backGround border-b border-border"
@@ -197,8 +211,9 @@ navigate("/appliedJobs")
             </div>
           )}
         </div>
+        </>
       )}
-
+</div>
       {isModalOpen && (
         <div
           id="authentication-modal"

@@ -4,25 +4,29 @@ import { useForm } from 'react-hook-form';
 import { COMPANY_CREATE, COMPANY_ENDPOINT } from '../config/endpoint';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../service/Loader';
 
 const ListedCompany = () => {
   const [companyDetails, setCompanyDetails] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   useEffect(() => {
     const fetchCompanyDetails = async () => {
+      setIsLoading(true);  // Start loading
       try {
         const response = await axios.get(COMPANY_ENDPOINT, { withCredentials: true });
-
         if (response) {
           setCompanyDetails(response.data);
         }
       } catch (error) {
         console.error('Failed to fetch company details:', error);
-        toast(error.response.data.message);
+        toast.error(error.response?.data?.message || 'Failed to fetch company details');
+      } finally {
+        setIsLoading(false);  // Stop loading
       }
     };
 
@@ -36,18 +40,18 @@ const ListedCompany = () => {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      const ParsedUser = JSON.parse(user);
-      const role = ParsedUser.role;
+      const parsedUser = JSON.parse(user);
+      const role = parsedUser.role;
       if (role === "Job seeker") {
         navigate("/redirect");
       }
-    }
-    if (!user) {
+    } else {
       navigate("/redirect");
     }
-  }, []);
+  }, [navigate]);
 
   const onSubmit = async (data) => {
+    setIsLoading(true);  // Start loading
     try {
       await axios.post(COMPANY_CREATE, data, { withCredentials: true });
       toast.success('Company registered successfully!');
@@ -57,6 +61,8 @@ const ListedCompany = () => {
     } catch (error) {
       console.error('Failed to register company:', error);
       toast.error(error.response?.data?.message || 'Failed to register company');
+    } finally {
+      setIsLoading(false);  // Stop loading
     }
   };
 
@@ -67,6 +73,8 @@ const ListedCompany = () => {
   return (
     <div className='min-h-screen flex flex-col items-center p-4'>
       <ToastContainer />
+      {isLoading && <Loader />} {/* Show loader when loading */}
+      
       <section className='text-4xl mb-8 text-center'>
         Register Your Company Here
       </section>

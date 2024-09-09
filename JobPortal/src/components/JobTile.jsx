@@ -5,7 +5,7 @@ const JobTile = ({ data }) => {
 
   const navigate=useNavigate()
   return (
-    <div className=' border-2 border-white flex flex-col shadow-md shadow-white ' onClick={()=>{
+    <div className=' border-2 border-border flex flex-col shadow-md shadow-white ' onClick={()=>{
       navigate(`/jobDiscription/${data._id}`)
     }}>
       <section className='p-1 mx-2 text-4xl'>{data.title}</section>
